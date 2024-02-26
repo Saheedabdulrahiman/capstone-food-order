@@ -29,7 +29,7 @@ app.use(cors({
   credentials: true, // Include credentials like cookies, authorization headers, etc.
 }));
 
-  const port = 3005
+  const port = 3000
 app.listen(port,() => { 
     console.log(`App running at ${port}...`)
  })
