@@ -44,7 +44,6 @@ export function checkAdminAuthLoader() {
   const token = getAuthToken();
 
   if (!token) {
-    
     return redirect('/admin/admin-login');
   }
   if(token){
