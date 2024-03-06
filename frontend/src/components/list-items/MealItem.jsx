@@ -21,7 +21,7 @@ export default function MealItem({ meal, isAdmin, onDelete, loading, onEdit }) {
             alt={meal.name}
           />
 
-          <h3 className="text-lg font-semibold">{meal.name}</h3>
+          <h3 className="text-lg font-semibold capitalize">{meal.name}</h3>
           <p className="text-gray-600 ">${meal.price}</p>
           <p className="">Restuarant: {meal.nameOfResturent}</p>
           <p className="text-gray-500 capitalize">category: {meal.category}</p>

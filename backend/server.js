@@ -1,10 +1,10 @@
 const mongoose = require("mongoose");
 
-const dbUrl = "mongodb://127.0.0.1:27017/food-order-app";
+const dbUrl = "mongodb+srv://saheeda342:FoGPcBlLtywa8wYN@cluster0.l6faj8y.mongodb.net/";
 mongoose.connect(dbUrl,{ useNewUrlParser: true, useUnifiedTopology: true })
 
 const db = mongoose.connection;
-db.on("connected",() => {   console.log('Connected to MongoDB');})
+db.on("connected",() => {   console.log('Connected to MongoDB atlas');})
 
 // Event handling for connection errors
 db.on('error', (err) => {

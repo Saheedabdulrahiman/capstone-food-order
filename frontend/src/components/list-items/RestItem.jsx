@@ -23,7 +23,7 @@ export default function RestItem({ restaurant, isAdmin, onDelete, loading, onEdi
             alt={restaurant.name}
           />
 
-          <h3 className="text-lg font-semibold">{restaurant.name}</h3>
+          <h3 className="text-lg font-semibold capitalize">{restaurant.name}</h3>
           <p className="text-gray-600 ">location: {restaurant.location}</p>
           <p className="">Opening: {restaurant.openingHours}</p>
           <p className="capitalize">Closing : {restaurant.closingHours}</p>
@@ -45,15 +45,7 @@ export default function RestItem({ restaurant, isAdmin, onDelete, loading, onEdi
                   Edit
                 </button>
               </div>
-            ) : (
-              <button
-                onClick={handleAddRestaurantToCart}
-                className=" flex justify-center items-center gap-2 py-2 px-4 bg-green-700  text-stone-100 rounded-lg hover:bg-green-600 active:bg-green-400 active:text-black active:border-2 "
-              >
-                <FaShoppingCart className=" w-4  h-4 " />
-                Add to Cart
-              </button>
-            )}
+            ) : null}
           </p>
         </div>
       </li>

@@ -24,7 +24,7 @@ export default function ArticelItem({ article, isAdmin, onDelete, loading, onEdi
             alt={article.name}
           />
 
-          <h3 className="text-lg font-semibold">{article.name}</h3>
+          <h3 className="text-lg font-semibold capitalize">{article.name}</h3>
           <p className="text-gray-800 ">category : {article.category}</p>
           <p className=" text-center px-3 text-stone-500 text-sm">
             {article.description}
@@ -47,15 +47,7 @@ export default function ArticelItem({ article, isAdmin, onDelete, loading, onEdi
                   Edit
                 </button>
               </div>
-            ) : (
-              <button
-                onClick={handleAddArticleToCart}
-                className=" flex justify-center items-center gap-2 py-2 px-4 bg-green-700  text-stone-100 rounded-lg hover:bg-green-600 active:bg-green-400 active:text-black active:border-2 "
-              >
-                <FaShoppingCart className=" w-4  h-4 " />
-                Add to Cart
-              </button>
-            )}
+            ) : null}
           </p>
         </div>
       </li>
