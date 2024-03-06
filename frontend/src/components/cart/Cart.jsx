@@ -35,6 +35,7 @@ export default function Cart() {
 
   function handleGoToCheckout() {
     userProgressCtx.showCheckout();
+
   }
 
   return (

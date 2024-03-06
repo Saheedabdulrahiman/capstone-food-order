@@ -16,6 +16,8 @@ export default function AddArticles() {
 const [loadedFoodArticle, setLoadedArticle] = useState([]);
 const [loading, setLoading] = useState(true);
 const [deleteLoading, setDeleteLoading] = useState(false);
+const [editMode, setEditMode] = useState(false);
+const [editItemId, setEditItemId] = useState(null);
 
       const handleChange = (e) => {
         const { name, value } = e.target;
@@ -25,12 +27,35 @@ const [deleteLoading, setDeleteLoading] = useState(false);
         }));
       };
     
+     
+
+      const fetchArticles = async () => {
+        const response = await fetch('http://localhost:3000/api/v1/admin/list-food-articles');
+        if (!response.ok) {
+          // Handle error
+        }
+        const articles = await response.json();
+        setLoadedArticle(articles);
+        setLoading(false);
+      };
+    
+      useEffect(() => {
+        fetchArticles();
+      }, []);
+
       const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
         try {
-          const response = await fetch('http://localhost:3000/api/v1/admin/food-articles', {
-            method: 'POST',
+          let url = 'http://localhost:3000/api/v1/admin/food-articles';
+          let method = 'POST';
+          if (editMode && editItemId) {
+            url = `http://localhost:3000/api/v1/admin/list-food-articles/${editItemId}`;
+            method = 'PATCH';
+          }
+    
+          const response = await fetch(url, {
+            method: method,
             headers: {
               'Content-Type': 'application/json',
             },
@@ -38,40 +63,27 @@ const [deleteLoading, setDeleteLoading] = useState(false);
           });
           const data = await response.json();
           if (response.ok) {
-            console.log('Food articel created successfully:', data);
-            // Reset form fields
+            console.log('Food article created/updated successfully:', data);
             setFormData({
-                image: '',
-                name: '',
-                description: '',
-                category: 'Appetizer',
+              image: '',
+              name: '',
+              description: '',
+              category: 'Appetizer',
             });
+            setEditMode(false);
+            setEditItemId(null);
           } else {
-            console.error('Error creating food article:', data.error);
+            console.error('Error creating/updating food article:', data.error);
           }
+          fetchArticles();
         } catch (error) {
           console.error('Network error:', error.message);
         } finally {
           setLoading(false);
         }
       };
-
-      useEffect(() => {
-        async function fetchRestaurants ()  {
-         
-           const response = await fetch('http://localhost:3000/api/v1/admin/list-food-articles');
-         if(!response.ok){
-           //..errror handling later
-         }
-       const meals = await response.json();
-       setLoadedArticle(meals)
-       setLoading(false)
-       }
-      fetchRestaurants();
-       
-     }, []);
    
-     const handleOnDelete = async (id) => {
+      const handleOnDelete = async (id) => {
         setDeleteLoading(true);
         try {
           const response = await fetch(`http://localhost:3000/api/v1/admin/list-food-articles/${id}`, {
@@ -79,21 +91,30 @@ const [deleteLoading, setDeleteLoading] = useState(false);
           });
           const data = await response.json();
           if (response.ok) {
-            // If the deletion was successful, call the handleDelete function passed from the parent component
-          
+            // Handle successful deletion
           } else {
-            // Handle the case where the server returns an error
-            console.error('Error deleting restaurant:', data.message);
+            console.error('Error deleting article:', data.message);
           }
+          fetchArticles();
         } catch (error) {
-          // Handle any network errors
           console.error('Network error:', error.message);
         } finally {
           setDeleteLoading(false);
         }
       };
-      
-      
+
+
+      const handleEdit = (id) => {
+        const articleToEdit = loadedFoodArticle.find((article) => article._id === id);
+        setEditMode(true);
+        setEditItemId(id);
+        setFormData({
+          image: articleToEdit.image,
+          name: articleToEdit.name,
+          description: articleToEdit.description,
+          category: articleToEdit.category,
+        });
+      };
       
 
   return (
@@ -113,7 +134,8 @@ const [deleteLoading, setDeleteLoading] = useState(false);
         ))}
       </select>
        <div className=' flex justify-center items-center '>
-        <button type="submit" disabled={loading} className=' text-center py-2 px-4 bg-green-600 text-white font-bold capitalize rounded-xl'>Add food-Article</button>
+        <button type="submit" disabled={loading} className=' text-center py-2 px-4 bg-green-600 text-white font-bold capitalize rounded-xl'>
+        {editMode ? 'Update food-article' : 'Add food-article'}</button>
         </div>
      </div>
      </form>
@@ -125,10 +147,11 @@ const [deleteLoading, setDeleteLoading] = useState(false);
 {loading ? (
       <p>Loading...</p>
     ) : (
-      <ul className="  w-full  gap-6 max-sm:flex-col  grid grid-cols-1 sm:grid-cols-2  lg:grid-cols-4  lg:mx-6">
+      <ul className="  w-full   gap-6 max-sm:flex-col  grid grid-cols-1 sm:grid-cols-2  lg:grid-cols-4  lg:mx-6">
         {loadedFoodArticle.map((article) => (
          <ArticelItem key={article._id} article={article} 
          onDelete={()=>{handleOnDelete(article._id)}}
+         onEdit={() => handleEdit(article._id)}
          loading={deleteLoading}
          isAdmin={true}/>
          

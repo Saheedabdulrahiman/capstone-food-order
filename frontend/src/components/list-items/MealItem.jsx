@@ -1,12 +1,15 @@
 import { useContext } from "react";
 import CartContext from "../../store/CartContext";
 import { FaShoppingCart } from "react-icons/fa";
-export default function MealItem({ meal, isAdmin, onDelete, loading }) {
+export default function MealItem({ meal, isAdmin, onDelete, loading, onEdit }) {
   const cartCtx = useContext(CartContext);
 
   function handleAddMealToCart() {
     cartCtx.addItem(meal);
   }
+
+  let editStyle =
+    "border-2 border-stone-400 text-blue-700 hover:text-white hover:bg-blue-700 hover:border-0 font-bold active:bg-green-700 capitalize px-2  rounded-lg";
 
   return (
     <>
@@ -25,14 +28,17 @@ export default function MealItem({ meal, isAdmin, onDelete, loading }) {
 
           <p>
             {isAdmin ? (
-              <div className="  flex flex-row justify-center w-3/4 my-2 ">
+              <div className="  flex justify-between w-3/4 my-2 gap-4 ">
                 <button
                   onClick={onDelete}
                   disabled={loading}
-                  className="  border-2 border-stone-400 text-red-700 font-bold active:bg-red-600  active:text-white capitalize px-4 py-1 rounded-lg"
+                  className="  border-2 border-stone-400 text-red-700 hover:border-0 active:border-0 font-bold active:bg-red-600 hover:bg-red-600 hover:text-white  active:text-white capitalize px-2  rounded-lg"
                 >
                   {" "}
                   {loading ? "Deleting..." : "Delete"}
+                </button>
+                <button onClick={onEdit} className={editStyle}>
+                  edit
                 </button>
               </div>
             ) : (
