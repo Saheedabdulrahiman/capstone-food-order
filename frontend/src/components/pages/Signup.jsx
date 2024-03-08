@@ -14,6 +14,8 @@ export default function Signup() {
     confirmPassword: "",
   });
 
+  const [passwordMatch,setPasswordMatch] = useState(false)
+
   const navigate = useNavigate();
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -21,6 +23,10 @@ export default function Signup() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if(formData.password !== formData.confirmPassword){
+      setPasswordMatch(true)
+      return
+    }
     try {
       const response = await fetch("http://localhost:3000/api/v1/user/signup", {
         method: "POST",
@@ -33,9 +39,23 @@ export default function Signup() {
         throw new Error("Error signing up");
       }
 
+    
+
       const data = await response.json();
       console.log(data); // Handle successful signup response
       // Reset the form after successful signup
+
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("access", data.token);
+      localStorage.setItem("refresh", data.token);
+
+      // Check local storage after a short delay
+      setTimeout(() => {
+        const storedToken = localStorage.getItem("token");
+        console.log("Stored token:", storedToken);
+        console.log(localStorage);
+      }, 1000);
+
       setFormData({
         name: "",
         email: "",
@@ -43,7 +63,9 @@ export default function Signup() {
         confirmPassword: "",
       });
 
-      return navigate("/");
+      
+
+      return navigate("/order");
     } catch (error) {
       console.error("Error signing up:", error.message);
       // Handle error
@@ -90,6 +112,7 @@ export default function Signup() {
               value={formData.confirmPassword}
               onChange={handleChange}
             />
+           <div className=" bg-yellow-00">{passwordMatch&& <p className=" text-red-600 font-semibold">password must match</p>}</div>
             <LoginButton label="sign up" type="submit" />
           </div>
         </form>

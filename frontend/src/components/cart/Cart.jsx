@@ -3,6 +3,7 @@ import UserProgressContext from '../../store/UserProgressContext'
 import { useContext } from 'react'
 import Modal from '../UI/Modal'
 import CartItem from './CartItem'
+import { FaRupeeSign} from "react-icons/fa";
 
 export default function Cart() {
   const cartCtx =  useContext(CartContext)
@@ -60,7 +61,7 @@ export default function Cart() {
       </ul>
   <p className=" flex justify-between mt-8 text-lg font-bold text-gray-700 mx-4">
     <p>Total :</p>
-   <p>{formatCartTotal(cartTotal)}</p> 
+   <p className=" flex items-center justify-center"> <FaRupeeSign  className=" h-4"/>{formatCartTotal(cartTotal)}</p> 
     </p>
   <p className=" flex justify-end gap-4 mt-6">
     <button onClick={handleCloseCart} className=" text-gray-800 hover:text-gray-900 active:text-gray-700 hover:font-semibold">close</button>

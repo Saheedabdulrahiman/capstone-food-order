@@ -7,10 +7,10 @@ export default function ArticelItem({ article, isAdmin, onDelete, loading, onEdi
 
   const cartCtx = useContext(CartContext);
 
-  function handleAddArticleToCart() {
-    // Assuming you have a function to add articles to the cart in your CartContext
-    cartCtx.addItem(article);
-  }
+  // function handleAddArticleToCart() {
+  //   // Assuming you have a function to add articles to the cart in your CartContext
+  //   cartCtx.addItem(article);
+  // }
 
   let editStyle = "border-2 border-stone-400 text-blue-700 hover:text-white hover:bg-blue-700 hover:border-0 font-bold active:bg-green-700 capitalize px-2  rounded-lg";
 

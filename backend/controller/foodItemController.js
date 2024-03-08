@@ -2,13 +2,13 @@ const FoodItem = require ("../models/FoodItem.model.js")
 const createFoodItem = async (req, res) => {
     try {
       // Extracting values from the request body
-      const { image, name, nameOfResturent, price, category } = req.body;
+      const { image, name, nameOfRestaurant, price, category } = req.body;
   
       // Creating a new food item instance
       const newFoodItem = new FoodItem({
         image,
         name,
-        nameOfResturent,
+        nameOfRestaurant,
         price,
         category,
       });

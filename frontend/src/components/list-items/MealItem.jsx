@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import CartContext from "../../store/CartContext";
-import { FaShoppingCart } from "react-icons/fa";
+import { FaShoppingCart , FaRupeeSign} from "react-icons/fa";
+
 export default function MealItem({ meal, isAdmin, onDelete, loading, onEdit }) {
   const cartCtx = useContext(CartContext);
 
@@ -13,7 +14,7 @@ export default function MealItem({ meal, isAdmin, onDelete, loading, onEdit }) {
 
   return (
     <>
-      <li className="   max-sm:w-[90%] lg:w-full  border-2 border-stone-300 rounded-lg  my-4 ">
+      <li className="   max-sm:w-full lg:w-full  border-2 border-stone-300 rounded-lg  my-4 ">
         <div className=" flex flex-col justify-center items-center  rounded-lg pb-2   mx-auto gap-1  ">
           <img
             className="  w-[100%] h-48 object-cover mb-2 rounded-t-md border shadow-lg"
@@ -21,9 +22,9 @@ export default function MealItem({ meal, isAdmin, onDelete, loading, onEdit }) {
             alt={meal.name}
           />
 
-          <h3 className="text-lg font-semibold capitalize">{meal.name}</h3>
-          <p className="text-gray-600 ">${meal.price}</p>
-          <p className="">Restuarant: {meal.nameOfResturent}</p>
+          <h3 className="text-lg font-semibold capitalize">{meal.name}</h3> 
+          <p className="text-gray-600 flex items-center  "><FaRupeeSign />{meal.price}</p>
+          <p className="">Restuarant: {meal.nameOfRestaurant}</p>
           <p className="text-gray-500 capitalize">category: {meal.category}</p>
 
           <p>
